@@ -7,3 +7,6 @@ class Bucket:
 
     def add(self, item):
         self.bucket.append(item)
+
+    def remove(self, item):
+        self.bucket.remove(item)

@@ -8,3 +8,9 @@ class TestBucket(object):
         bucket = Bucket()
         bucket.add('item')
         assert bucket.bucket == ['item']
+
+    def test_remove(self):
+        bucket = Bucket()
+        bucket.add('item')
+        bucket.remove('item')
+        assert bucket.bucket == []
