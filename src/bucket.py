@@ -1,11 +1,16 @@
 """Collect new ideas that could be projects or things to do."""
 
+import datetime
+from collections import namedtuple
 import os
+
+import pandas as pd
 
 
 class Bucket:
     def __init__(self, bucket_dir='.yrap', bucket_file='bucket.csv', delimiter='|', logging=True):
         self.bucket = []
+        self.item = namedtuple('Bucket', ['date_created', 'item'])
         self.bucket_dir = bucket_dir
         self.bucket_file = bucket_file
         self.delimiter = delimiter
@@ -20,7 +25,21 @@ class Bucket:
                 f.write('')
 
     def add(self, item):
-        self.bucket.append(item)
+        self.bucket.append(self.item(date_created=datetime.datetime.now(), item=item))
 
     def remove(self, item):
-        self.bucket.remove(item)
+        for i in self.bucket:
+            if i.item == item:
+                self.bucket.remove(i)
+            break
+
+    def read(self):
+        """Read the bucket from a csv file"""
+        bucket_df = pd.read_csv(self.bucket_path, delimiter=self.delimiter)
+
+    def save(self):
+        """Save the bucket to a csv file
+
+        Bucket items are saved with the date they were created.
+        """
+        pass
