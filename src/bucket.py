@@ -36,10 +36,16 @@ class Bucket:
     def read(self):
         """Read the bucket from a csv file"""
         bucket_df = pd.read_csv(self.bucket_path, delimiter=self.delimiter)
+        return bucket_df
 
     def save(self):
         """Save the bucket to a csv file
 
         Bucket items are saved with the date they were created.
         """
-        pass
+        self.create_bucket_file()
+        bucket_df = pd.DataFrame(self.bucket)
+        existing_dg = self.read()
+        bucket_df = bucket_df.append(existing_dg)
+        bucket_df.to_csv(self.bucket_path, index=False, sep=self.delimiter)
+
