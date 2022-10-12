@@ -35,7 +35,12 @@ class TestBucket(object):
         bucket = Bucket(bucket_file=TEST_BUCKET_FILE)
         bucket.add('item')
         bucket.save()
-        bucket_df = bucket.read()
-        assert bucket_df['item'][0] == 'item'
         with open(os.path.join(os.path.expanduser('~'), bucket.bucket_dir, TEST_BUCKET_FILE), 'r') as f:
             assert 'item' in f.read()
+
+    def test_read(self):
+        bucket = Bucket(bucket_file=TEST_BUCKET_FILE)
+        bucket.add('item')
+        bucket.save()
+        bucket_df = bucket.read()
+        assert bucket_df['item'][0] == 'item'
