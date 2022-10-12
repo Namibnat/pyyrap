@@ -35,7 +35,10 @@ class Bucket:
 
     def read(self):
         """Read the bucket from a csv file"""
-        bucket_df = pd.read_csv(self.bucket_path, delimiter=self.delimiter)
+        try:
+            bucket_df = pd.read_csv(self.bucket_path, sep=self.delimiter)
+        except pd.errors.EmptyDataError:
+            bucket_df = None
         return bucket_df
 
     def save(self):
@@ -46,6 +49,7 @@ class Bucket:
         self.create_bucket_file()
         bucket_df = pd.DataFrame(self.bucket)
         existing_dg = self.read()
-        bucket_df = bucket_df.append(existing_dg)
+        if existing_dg is not None:
+            bucket_df = bucket_df.append(existing_dg)
         bucket_df.to_csv(self.bucket_path, index=False, sep=self.delimiter)
 
