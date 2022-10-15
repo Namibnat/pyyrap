@@ -1,8 +1,8 @@
 """Collect new ideas that could be projects or things to do."""
 
 import datetime
-from collections import namedtuple
 import os
+from collections import namedtuple
 
 import pandas as pd
 
@@ -52,4 +52,3 @@ class Bucket:
         if existing_dg is not None:
             bucket_df = bucket_df.append(existing_dg)
         bucket_df.to_csv(self.bucket_path, index=False, sep=self.delimiter)
-

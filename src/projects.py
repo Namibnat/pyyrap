@@ -1,6 +1,6 @@
 """Projects are the heart of GTD."""
 
-import datetime
+# import datetime
 import os
 from collections import namedtuple
 
@@ -33,6 +33,12 @@ class Project:
         self.home_directory = os.path.expanduser('~')
         self.project_path = os.path.join(self.home_directory, GTDDefines.GTD_DIR, self.project_file)
 
+    def create_project_file(self):
+        if not os.path.exists(self.project_path):
+            os.makedirs(os.path.dirname(self.project_path), exist_ok=True)
+            with open(self.project_path, 'w') as f:
+                f.write(self.delimiter.join(self.project_headers))
+
 
 class Actions:
     def __init__(self, action_file=GTDDefines.ACTION_FILE, delimiter='|', logging=True):
@@ -45,3 +51,9 @@ class Actions:
         self.logging = logging
         self.home_directory = os.path.expanduser('~')
         self.action_path = os.path.join(self.home_directory, GTDDefines.GTD_DIR, self.action_file)
+
+    def create_action_file(self):
+        if not os.path.exists(self.action_path):
+            os.makedirs(os.path.dirname(self.action_path), exist_ok=True)
+            with open(self.action_path, 'w') as f:
+                f.write(self.delimiter.join(self.action_headers))
