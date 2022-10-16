@@ -1,6 +1,6 @@
 """Projects are the heart of GTD."""
 
-# import datetime
+import datetime
 import os
 from collections import namedtuple
 
@@ -38,6 +38,10 @@ class Project:
             os.makedirs(os.path.dirname(self.project_path), exist_ok=True)
             with open(self.project_path, 'w') as f:
                 f.write(self.delimiter.join(self.project_headers))
+
+    def add(self, project, done_when, project_status=GTDDefines.PROJECT_STATE_ACTIVE):
+        self.project.append(self.item(date_created=datetime.datetime.now(), project=project, done_when=done_when,
+                                      project_status=project_status, finished_date=None))
 
 
 class Actions:
