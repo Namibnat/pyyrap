@@ -1,7 +1,7 @@
 """YRAP commands."""
 
-from .projects import Project
-from .bucket import Bucket
+from bucket import Bucket
+from projects import Project
 
 
 def create_project_from_bucket_item():
@@ -22,3 +22,7 @@ def create_project_from_bucket_item():
     bucket.remove(item)
     bucket.save()
     print(f'Created project {item}.')
+
+
+if __name__ == '__main__':
+    create_project_from_bucket_item()

@@ -25,6 +25,7 @@ class Bucket:
                 f.write('')
 
     def add(self, item):
+        self.create_bucket_file()
         self.bucket.append(self.item(date_created=datetime.datetime.now(), item=item))
 
     def remove(self, item):
@@ -38,6 +39,8 @@ class Bucket:
         try:
             bucket_df = pd.read_csv(self.bucket_path, sep=self.delimiter)
         except pd.errors.EmptyDataError:
+            bucket_df = None
+        except FileNotFoundError:
             bucket_df = None
         return bucket_df
 
