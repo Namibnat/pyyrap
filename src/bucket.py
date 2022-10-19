@@ -48,6 +48,11 @@ class Bucket:
         """Save the bucket to a csv file
 
         Bucket items are saved with the date they were created.
+
+        TODO: CHANGE TO contact -> FutureWarning: 
+            The frame.append method is deprecated and will be removed from pandas in a
+            future version. Use pandas.concat instead.
+            bucket_df = bucket_df.append(existing_dg)
         """
         self.create_bucket_file()
         bucket_df = pd.DataFrame(self.bucket)

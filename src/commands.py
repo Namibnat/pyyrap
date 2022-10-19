@@ -4,6 +4,30 @@ from bucket import Bucket
 from projects import Project
 
 
+def controller():
+    """YRAP controller."""
+    print('What would you like to do?')
+    print('1: Create a new bucket item')
+    print('2: Create a new project from a bucket item')
+    print('3: Exit')
+    choice = int(input())
+    if choice == 1:
+        create_bucket_item()
+    elif choice == 2:
+        create_project_from_bucket_item()
+    elif choice == 3:
+        exit()
+    else:
+        print('Invalid choice.')
+    controller()
+
+def create_bucket_item():
+    """Create a new bucket item."""
+    bucket = Bucket()
+    bucket.add(input('What is the bucket item? '))
+    bucket.save()
+
+
 def create_project_from_bucket_item():
     """Review bucket items, and allow items to be turned into projects."""
     bucket = Bucket()
@@ -25,4 +49,4 @@ def create_project_from_bucket_item():
 
 
 if __name__ == '__main__':
-    create_project_from_bucket_item()
+    controller()

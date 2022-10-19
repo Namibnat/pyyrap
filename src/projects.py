@@ -4,6 +4,8 @@ import datetime
 import os
 from collections import namedtuple
 
+import pandas as pd
+
 
 class GTDDefines:
     """GTD defines for the project module."""
@@ -42,6 +44,25 @@ class Project:
     def add(self, project, done_when, project_status=GTDDefines.PROJECT_STATE_ACTIVE):
         self.project.append(self.item(date_created=datetime.datetime.now(), project=project, done_when=done_when,
                                       project_status=project_status, finished_date=None))
+
+    def read(self):
+        """Read the project from a csv file"""
+        try:
+            project_df = pd.read_csv(self.project_path, sep=self.delimiter)
+        except pd.errors.EmptyDataError:
+            project_df = None
+        except FileNotFoundError:
+            project_df = None
+        return project_df
+
+    def save(self):
+        """Save the project to a csv file"""
+        self.create_project_file()
+        project_df = pd.DataFrame(self.project)
+        existing_dg = self.read()
+        if existing_dg is not None:
+            project_df = project_df.append(existing_dg)
+        project_df.to_csv(self.project_path, index=False, sep=self.delimiter)
 
 
 class Actions:
