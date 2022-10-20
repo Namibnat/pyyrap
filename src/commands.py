@@ -40,8 +40,10 @@ def create_project_from_bucket_item():
     print('Which item would you like to turn into a project?')
     item_index = int(input())
     item = bucket_df['item'][item_index]
+    print('What will indicate that the project is complete?')
+    done_when = input()
     project = Project()
-    project.add(item)
+    project.add(item, done_when)
     project.save()
     bucket.remove(item)
     bucket.save()

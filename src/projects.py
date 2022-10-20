@@ -61,7 +61,7 @@ class Project:
         project_df = pd.DataFrame(self.project)
         existing_dg = self.read()
         if existing_dg is not None:
-            project_df = project_df.append(existing_dg)
+            project_df = pd.concat([project_df, existing_dg])
         project_df.to_csv(self.project_path, index=False, sep=self.delimiter)
 
 
