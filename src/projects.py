@@ -42,8 +42,9 @@ class Project:
                 f.write(self.delimiter.join(self.project_headers))
 
     def add(self, project, done_when, project_status=GTDDefines.PROJECT_STATE_ACTIVE):
-        self.project.append(self.item(date_created=datetime.datetime.now(), project=project, done_when=done_when,
-                                      project_status=project_status, finished_date=None))
+        self.project.append(
+            self.item(date_created=datetime.datetime.now(), project=project, done_when=done_when,
+                      project_status=project_status, finished_date=None))
 
     def read(self):
         """Read the project from a csv file"""
@@ -82,3 +83,13 @@ class Actions:
             os.makedirs(os.path.dirname(self.action_path), exist_ok=True)
             with open(self.action_path, 'w') as f:
                 f.write(self.delimiter.join(self.action_headers))
+
+    def read(self):
+        """Read the action from a csv file"""
+        try:
+            action_df = pd.read_csv(self.action_path, sep=self.delimiter)
+        except pd.errors.EmptyDataError:
+            action_df = None
+        except FileNotFoundError:
+            action_df = None
+        return action_df
